@@ -1,45 +1,54 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # Import war an falscher stelle
 
-def mergeSort(unsorted_list):
-    if (
-        len(unsorted_list) > 1
-        and not len(unsorted_list) < 1
-        and len(unsorted_list) != 0
-    ):
-        middle = len(unsorted_list) // 2
-        left_half = unsorted_list[:middle]
-        right_half = unsorted_list[middle:]
+def merge_sort(sort_list):   #Zu langer Variablen Name + Funktionen in Snake Case und lowercase
+    if (len(sort_list) > 1): # Selbe spezifizierungen
+        mid = len(sort_list) // 2
+        left_half = sort_list[:mid] #Varaiablen Name der genauer ist
+        right_half = sort_list[mid:]
 
-        mergeSort(left_half)
-        mergeSort(right_half)
+        merge_sort(left_half)
+        merge_sort(right_half)
 
-        left = 0
-        right = 0
-        final_index = 0
+        l = 0
+        r = 0
+        i = 0
 
-        while left < len(left_half) and right < len(right_half):
-            if left_half[left] <= right_half[right]:
-                left += 1
+        while l < len(left_half) and r < len(right_half):
+            if left_half[l] <= right_half[r]:
+                sort_list[i] = left_half[l]     # Assignment Funktion war überflüssig
+                l += 1
             else:
-                right += 1
-            final_index += 1
+                sort_list[i] = right_half[r]
+                r += 1
+            i += 1
 
-        while left < len(left_half):
-            unsorted_list[final_index] = left_half[left]
-            left += 1
-            final_index += 1
+        while l < len(left_half):
+            sort_list[i] = left_half[l]
+            l += 1
+            i += 1
 
-        while right < len(right_half):
-            unsorted_list[final_index] = right_half[right]
-            right += 1
-            final_index += 1
-
+        while r < len(right_half):
+            sort_list[i] = right_half[r]
+            r += 1
+            i += 1
 
 my_list = [54, 26, 93, 17, 77, 31, 44, 55, 20]
 x = range(len(my_list))
-plt.plot(x, my_list)
-plt.show()
-mergeSort(my_list)
-y = range(len(my_list))
-plt.plot(y, my_list)
+
+fig, (ax1, ax2) = plt.subplots(1, 2)
+
+ax1.bar(x, my_list)
+ax1.set_xticks(x)
+ax1.set_xlabel("Index")
+ax1.set_ylabel("Wert")
+ax1.set_title("Unsortierte Liste")
+
+merge_sort(my_list)
+
+ax2.bar(x, my_list)
+ax2.set_xticks(x)
+ax2.set_xlabel("Index")
+ax2.set_ylabel("Wert")
+ax2.set_title("Sortierte Liste")
+fig.tight_layout()
 plt.show()
